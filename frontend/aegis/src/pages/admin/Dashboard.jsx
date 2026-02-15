@@ -18,6 +18,7 @@ import ClassManagement from './components/ClassManagement';
 import StudentManagement from './components/StudentManagement';
 import AuthorityManagement from './components/AuthorityManagement';
 
+//this is comment
 const AdminDashboard = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('dashboard');
