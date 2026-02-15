@@ -1,0 +1,271 @@
+/* Announcements Styles */
+.announcements-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #fa7e1e 0%, #d13a63 100%);
+  min-height: 100vh;
+}
+
+.announcements-container h2 {
+  color: #fff;
+  margin-bottom: 10px;
+  font-size: 2.5em;
+}
+
+.announcements-container .subtitle {
+  color: #ffe0e6;
+  margin-bottom: 30px;
+}
+
+.announcement-controls {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.search-bar button {
+  padding: 12px 25px;
+  background: #fa7e1e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.search-bar button:hover {
+  background: #ce6b0f;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  flex: 1;
+  min-width: 150px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.announcements-list {
+  display: grid;
+  gap: 15px;
+}
+
+.announcement-item {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  gap: 15px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-left: 5px solid #fa7e1e;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.announcement-icon {
+  font-size:  2em;
+  min-width: 60px;
+  text-align: center;
+}
+
+.announcement-info {
+  flex: 1;
+}
+
+.announcement-info h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.preview {
+  color: #666;
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.announcement-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.announcement-footer span:first-child {
+  color: #999;
+}
+
+.priority {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.8em;
+}
+
+.announcement-detail {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.back-btn {
+  padding: 10px 20px;
+  background: #fa7e1e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.back-btn:hover {
+  background: #ce6b0f;
+}
+
+.announcement-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.announcement-content {
+  background: white;
+  padding: 20px;
+}
+
+.announcement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.announcement-header h2 {
+  margin: 0;
+  color: #333;
+  flex: 1;
+}
+
+.badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.priority-badge,
+.category-badge {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.category-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.announcement-meta {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.announcement-meta p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.announcement-body {
+  color: #333;
+  line-height: 1.8;
+  font-size: 1.05em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.no-announcements {
+  text-align: center;
+  color: #999;
+  padding: 40px 20px;
+  font-size: 1.1em;
+  background: white;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .announcements-container {
+    padding: 10px;
+  }
+
+  .announcement-controls {
+    padding: 15px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .filters select {
+    min-width: 100%;
+  }
+
+  .announcement-item {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .announcement-header {
+    flex-direction: column;
+  }
+
+  .badges {
+    margin-top: 10px;
+  }
+}

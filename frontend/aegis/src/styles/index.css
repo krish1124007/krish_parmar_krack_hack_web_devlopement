@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Design tokens - Day Mode (Sky Blue & Forest Green) */
+  --primary: #0ea5e9;
+  --primary-600: #0284c7;
+  --danger: #ef4444;
+
+  --dash-bg: #ffffff;
+  --card-bg: #ffffff;
+  --input-bg: #f1f5f9;
+  --sidebar-bg: #f8fafc;
+  --sidebar-border: #e2e8f0;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+  color-scheme: light;
+  color: var(--text-primary);
+  background-color: var(--dash-bg);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark mode overrides (Night Mode: Deep Navy & Warm Accents) */
+:root[data-theme='dark'],
+[data-theme='dark'] {
+  --dash-bg: #0f172a;
+  --card-bg: #1e293b;
+  --input-bg: #334155;
+  --sidebar-bg: #1e293b;
+  --sidebar-border: #334155;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+
+  --primary: #f59e0b;
+  --primary-600: #d97706;
+  --danger: #f87171;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Utility refinements */
+* {
+  box-sizing: border-box;
+}
+
+.main-content {
+  background: var(--dash-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* Buttons */
+.header-btn,
+button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+}
+
+/* Small helpers */
+.nav-icon-btn {
+  background: transparent;
+  border: none;
+}
+
+/* Reset buttons specific styles if needed, but keeping it minimal */
+button {
+  cursor: pointer;
+}
+
+/* Fancy custom scrollbar for modern browsers */
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.85), rgba(59, 130, 246, 0.65));
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.03);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.05);
+  transform: translateZ(0);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.8) transparent;
+}
+
+/* Dark theme scrollbar tweaks */
+:root[data-theme='dark'] *::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(96, 165, 250, 0.48), rgba(59, 130, 246, 0.32));
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Apply subtle track background for content areas */
+.content-scrollable::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Global Modal Styles (ensure consistent overlay + z-index across app) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+  z-index: 99999; /* very high to overlay sidebars/headers */
+}
+
+.modal-content {
+  background: #ffffff00 !important; /* enforce transparent background */
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  z-index: 100000; /* should be above overlay children */
+}
+
+/* Ensure inner cards inside modal don't force an opaque white background */
+.modal-content .action-card {
+  background: rgba(45, 44, 44, 0.737) !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 1.25rem !important;
+}
+
+/* Slightly stronger background for forms to keep readability */
+.modal-content .glass-form,
+.modal-content .event-form {
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100001;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

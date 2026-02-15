@@ -1,0 +1,124 @@
+.top-bar {
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+}
+
+.header-titles h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--sidebar-border);
+    box-shadow: var(--shadow-sm);
+    color: var(--text-secondary);
+    min-width: 250px;
+}
+
+.search-wrapper input {
+    background: transparent;
+    border: none;
+    outline: none;
+    margin-left: 0.5rem;
+    color: var(--text-primary);
+    width: 100%;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #8b5cf6);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.profile-text { display: none; }
+
+.profile-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.profile-role {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+    .profile-text { display: none; }
+
+
+/* show profile text on wider screens */
+@media (min-width: 900px) {
+    .profile-text { display: block; }
+}
+/* Mobile */
+@media (max-width: 768px) {
+    .top-bar {
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--dash-bg);
+        backdrop-filter: blur(10px);
+    }
+
+    .header-titles h1 {
+        font-size: 1.4rem;
+    }
+
+    .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .header-actions {
+        gap: 0.8rem;
+    }
+
+    .search-wrapper {
+        min-width: unset;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .search-wrapper input {
+        display: none;
+    }
+}
