@@ -22,8 +22,8 @@ const getApiBaseUrl = () => {
 
     // Use production URL if in production mode
     if (import.meta.env.PROD) {
-        // TODO: Replace this with your actual deployed backend URL
-        return 'https://your-backend-url.onrender.com';
+        // Replace this with your actual deployed backend URL
+        return 'https://krish-parmar-krack-hack-web-devlopement.onrender.com';
     }
 
     // Development URL
