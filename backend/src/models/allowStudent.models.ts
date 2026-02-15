@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-interface IAllowStudent extends Document {
+export interface IAllowStudent extends Document {
     email: string;
     myclass: mongoose.Schema.Types.ObjectId;
 }

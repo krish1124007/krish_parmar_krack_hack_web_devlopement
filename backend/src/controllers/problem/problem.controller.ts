@@ -135,7 +135,7 @@ const getProblemsByDomain = asyncHandler(async (req: AuthRequest, res: Response)
         return returnResponse(res, 404, "Domain not found", { success: false, data: null });
     }
 
-    const problems = await Problem.find({ domain: new mongoose.Types.ObjectId(domainId) })
+    const problems = await Problem.find({ domain: new mongoose.Types.ObjectId(domainId as string) })
         .populate("student", "name email")
         .populate("authority", "name email")
         .sort({ createdAt: -1 });
