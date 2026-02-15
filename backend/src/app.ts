@@ -5,14 +5,7 @@ const app = express();
 
 // CORS Configuration - Allow ALL origins (works with credentials)
 app.use(cors({
-    origin: function (origin, callback) {
-        // Allow all origins by reflecting back the requesting origin
-        // This works with credentials (unlike origin: "*")
-        callback(null, origin || '*');
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: "*"
 }));
 
 app.use(express.json({ limit: "16kb" }));
