@@ -27,6 +27,43 @@ const Login = () => {
         setTheme(prev => prev === 'light' ? 'dark' : 'light');
     };
 
+    // Role Change Effect: Auto-fill for Admin
+    useEffect(() => {
+        if (role === 'admin') {
+            setFormData({ email: 'admin@gmail.com', password: 'admin' });
+        } else {
+            setFormData({ email: '', password: '' });
+        }
+    }, [role]);
+
+    // Handle Email Change with Auto-Password Logic for Student/Faculty
+    const handleEmailChange = (e) => {
+        const newEmail = e.target.value;
+        let newPassword = formData.password;
+
+        if (role === 'student' || role === 'faculty') {
+            if (newEmail.length >= 3) {
+                // Formula: First 3 letters of email + @123
+                newPassword = newEmail.substring(0, 3) + '@123';
+            } else {
+                newPassword = '';
+            }
+        }
+        // No auto-fill for authority
+        if (role === 'admin') {
+            // Admin is auto-filled but if they type, we let them (password remains unless they change it)
+            // But if they change email, maybe we shouldn't change password automatically?
+            // The requirement was just "write this tes creditials".
+            // Assuming specific logic only for student/faculty.
+        }
+
+        setFormData(prev => ({ ...prev, email: newEmail, password: role === 'student' || role === 'faculty' ? newPassword : prev.password }));
+    };
+
+    const handlePasswordChange = (e) => {
+        setFormData({ ...formData, password: e.target.value });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -66,7 +103,7 @@ const Login = () => {
 
     return (
         <div className="login-wrapper" data-theme={theme}>
-            {/* Left Side - Graphic Section (Swapped) */}
+            {/* Left Side - Graphic Section */}
             <div className="graphic-section">
                 <div className="sky-elements">
                     <div className="sun-moon"></div>
@@ -85,7 +122,7 @@ const Login = () => {
                 </div>
             </div>
 
-            {/* Right Side - Login Form (Swapped) */}
+            {/* Right Side - Login Form */}
             <div className="login-section">
                 <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Theme">
                     {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
@@ -93,7 +130,6 @@ const Login = () => {
 
                 <div className="login-content-box">
                     <div className="logo-area">
-
                         <h1>Welcome Back</h1>
                         <p>Sign in to your dashboard</p>
                     </div>
@@ -125,7 +161,7 @@ const Login = () => {
                                     type="email"
                                     placeholder="name@example.com"
                                     value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    onChange={handleEmailChange}
                                     required
                                 />
                             </div>
@@ -140,7 +176,7 @@ const Login = () => {
                                     type="password"
                                     placeholder="••••••••"
                                     value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                    onChange={handlePasswordChange}
                                     required
                                 />
                             </div>
