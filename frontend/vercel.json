@@ -1,0 +1,12 @@
+{
+    "buildCommand": "cd aegis && npm install && npm run build",
+    "outputDirectory": "aegis/dist",
+    "installCommand": "cd aegis && npm install",
+    "devCommand": "cd aegis && npm run dev",
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
