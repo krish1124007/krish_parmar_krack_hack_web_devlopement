@@ -27,7 +27,7 @@ const getApiBaseUrl = () => {
     }
 
     // Development URL
-    return 'http://localhost:8000';
+    return 'https://krish-parmar-krack-hack-web-devlopement.onrender.com';
 };
 
 export const API_BASE_URL = getApiBaseUrl();
