@@ -1,6 +1,7 @@
 import apiFetch from './api.js';
+import { API_ENDPOINTS } from '../config/api.config.js';
 
-const BASE_URL = 'http://localhost:8000/api/v1/event';
+const BASE_URL = API_ENDPOINTS.EVENT.BASE;
 
 // Faculty: Create a new event
 export async function createEvent(eventData) {

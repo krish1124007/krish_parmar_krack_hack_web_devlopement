@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock, ChevronRight, School, GraduationCap, Building2, UserCog, Moon, Sun } from 'lucide-react';
+import { API_ENDPOINTS } from '../config/api.config.js';
 import '../styles/Login.css';
 
 const Login = () => {
@@ -33,7 +33,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await fetch(`http://localhost:8000/api/v1/${role}/login`, {
+            const response = await fetch(API_ENDPOINTS.LOGIN(role), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
