@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { apiFetch } from '../../../utils/api';
+import { API_ENDPOINTS } from '../../../config/api.config';
 import { Search, Plus } from 'lucide-react';
 
 const FacultyManagement = ({ faculties, onRefresh }) => {
@@ -13,7 +14,7 @@ const FacultyManagement = ({ faculties, onRefresh }) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/admin/create-faculty', {
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.CREATE_FACULTY, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(facultyData)
@@ -36,7 +37,7 @@ const FacultyManagement = ({ faculties, onRefresh }) => {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this?")) return;
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/admin/delete-faculty/${id}`, { method: 'DELETE' });
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.DELETE_FACULTY(id), { method: 'DELETE' });
             const data = await res.json();
             if (data.success) {
                 setMessage('Faculty Deleted');

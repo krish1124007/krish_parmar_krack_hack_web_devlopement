@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { apiFetch } from '../../../utils/api';
+import { API_ENDPOINTS } from '../../../config/api.config';
 import { Search, Plus, Upload } from 'lucide-react';
 
 const ClassManagement = ({ classes, faculties, onRefresh }) => {
@@ -14,7 +15,7 @@ const ClassManagement = ({ classes, faculties, onRefresh }) => {
         setLoading(true);
 
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/admin/create-class', {
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.CREATE_CLASS, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -40,7 +41,7 @@ const ClassManagement = ({ classes, faculties, onRefresh }) => {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this?")) return;
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/admin/delete-class/${id}`, { method: 'DELETE' });
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.DELETE_CLASS(id), { method: 'DELETE' });
             const data = await res.json();
             if (data.success) {
                 setMessage('Class Deleted');

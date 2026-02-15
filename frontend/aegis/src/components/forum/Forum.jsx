@@ -4,12 +4,13 @@ import Layout from '../../components/Layout';
 import { Search, MessageCircle, ThumbsUp, ThumbsDown, Send, ArrowLeft, User, PlusCircle, Filter } from 'lucide-react';
 import '../../styles/Dashboard.css';
 import '../../styles/Forum.css';
+import { API_BASE_URL } from '../../config/api.config';
 
 const Forum = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [user] = useState(JSON.parse(localStorage.getItem('user') || '{}'));
   const userId = user._id || localStorage.getItem('userId');
-  const API_URL = 'http://localhost:8000';
+  const API_URL = API_BASE_URL;
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('accessToken');

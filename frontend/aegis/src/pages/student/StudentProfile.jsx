@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { apiFetch } from '../../utils/api';
+import { API_ENDPOINTS } from '../../config/api.config';
 import '../../styles/Dashboard.css';
 
 const StudentProfile = () => {
@@ -24,7 +25,7 @@ const StudentProfile = () => {
 
     const fetchProfile = async () => {
         try {
-            const response = await apiFetch('http://localhost:8000/api/v1/student/profile');
+            const response = await apiFetch(API_ENDPOINTS.STUDENT.PROFILE);
             const data = await response.json();
             if (data.data.success) {
                 const student = data.data.data;
@@ -47,7 +48,7 @@ const StudentProfile = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await apiFetch('http://localhost:8000/api/v1/student/profile', {
+            const response = await apiFetch(API_ENDPOINTS.STUDENT.PROFILE, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

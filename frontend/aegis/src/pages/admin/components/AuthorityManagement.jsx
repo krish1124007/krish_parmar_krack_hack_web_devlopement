@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { apiFetch } from '../../../utils/api';
+import { API_ENDPOINTS } from '../../../config/api.config';
 import { Search, Plus } from 'lucide-react';
 
 const AuthorityManagement = ({ authorities, onRefresh }) => {
@@ -24,7 +25,7 @@ const AuthorityManagement = ({ authorities, onRefresh }) => {
 
     const fetchDomains = async () => {
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/admin/get-domains');
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.GET_DOMAINS);
             const data = await res.json();
             if (data.data.success) {
                 console.log(data)
@@ -40,7 +41,7 @@ const AuthorityManagement = ({ authorities, onRefresh }) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/admin/create-domain', {
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.CREATE_DOMAIN, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(domainData)
@@ -65,7 +66,7 @@ const AuthorityManagement = ({ authorities, onRefresh }) => {
         setLoading(true);
         try {
             // First create the authority
-            const res = await apiFetch('http://localhost:8000/api/v1/admin/create-authority', {
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.CREATE_AUTHORITY, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(authorityData)
@@ -77,7 +78,7 @@ const AuthorityManagement = ({ authorities, onRefresh }) => {
 
                 // If we are in a domain view, add this authority to the domain
                 if (selectedDomain) {
-                    await apiFetch('http://localhost:8000/api/v1/admin/add-authority-to-domain', {
+                    await apiFetch(API_ENDPOINTS.ADMIN.ADD_AUTHORITY_TO_DOMAIN, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ domainId: selectedDomain._id, authorityId: newAuthId })
@@ -102,7 +103,7 @@ const AuthorityManagement = ({ authorities, onRefresh }) => {
     const handleDeleteAuthority = async (id) => {
         if (!window.confirm("Are you sure you want to delete this?")) return;
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/admin/delete-authority/${id}`, { method: 'DELETE' });
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.DELETE_AUTHORITY(id), { method: 'DELETE' });
             const data = await res.json();
             if (data.data.success) {
                 setMessage('Authority Deleted');
@@ -122,7 +123,7 @@ const AuthorityManagement = ({ authorities, onRefresh }) => {
     const handleDomainClick = async (domain) => {
         // Fetch authorities for this domain to ensure fresh data
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/admin/get-domain-authorities/${domain._id}`);
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.GET_DOMAIN_AUTHORITIES(domain._id));
             const data = await res.json();
             if (data.data.success) {
                 // We update the selected domain with the fresh list of authorities
@@ -346,7 +347,7 @@ const AuthorityManagement = ({ authorities, onRefresh }) => {
                                 const addExisting = async () => {
                                     setLoading(true);
                                     try {
-                                        await apiFetch('http://localhost:8000/api/v1/admin/add-authority-to-domain', {
+                                        await apiFetch(API_ENDPOINTS.ADMIN.ADD_AUTHORITY_TO_DOMAIN, {
                                             method: 'POST',
                                             headers: { 'Content-Type': 'application/json' },
                                             body: JSON.stringify({ domainId: selectedDomain._id, authorityId: authorityData.selectedId })
@@ -475,7 +476,7 @@ const AuthorityManagement = ({ authorities, onRefresh }) => {
                                                 onClick={async (e) => {
                                                     e.stopPropagation();
                                                     try {
-                                                        const res = await apiFetch('http://localhost:8000/api/v1/admin/send-work-report', {
+                                                        const res = await apiFetch(API_ENDPOINTS.ADMIN.SEND_WORK_REPORT, {
                                                             method: 'POST',
                                                             headers: { 'Content-Type': 'application/json' },
                                                             body: JSON.stringify({ authorityId: row._id })

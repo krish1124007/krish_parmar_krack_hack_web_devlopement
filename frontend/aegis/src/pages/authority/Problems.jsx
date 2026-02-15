@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { apiFetch } from '../../utils/api';
+import { API_ENDPOINTS } from '../../config/api.config';
 import '../../styles/Dashboard.css';
 
 const AuthorityProblems = () => {
@@ -29,7 +30,7 @@ const AuthorityProblems = () => {
 
     const fetchProblems = async () => {
         try {
-            const response = await apiFetch('http://localhost:8000/api/v1/authority/complaints');
+            const response = await apiFetch(API_ENDPOINTS.AUTHORITY.COMPLAINTS);
             const data = await response.json();
             console.log(data)
             if (data.data.success) {
@@ -42,7 +43,7 @@ const AuthorityProblems = () => {
 
     const fetchColleagues = async () => {
         try {
-            const response = await apiFetch('http://localhost:8000/api/v1/authority/colleagues');
+            const response = await apiFetch(API_ENDPOINTS.AUTHORITY.COLLEAGUES);
             const data = await response.json();
             if (data.data.success) {
                 setColleagues(data.data.data);
@@ -54,7 +55,7 @@ const AuthorityProblems = () => {
 
     const handleAccept = async (id) => {
         try {
-            const response = await apiFetch(`http://localhost:8000/api/v1/authority/complaints/${id}/accept`, {
+            const response = await apiFetch(API_ENDPOINTS.AUTHORITY.ACCEPT_COMPLAINT(id), {
                 method: 'POST'
             });
             const data = await response.json();
@@ -81,7 +82,7 @@ const AuthorityProblems = () => {
     const handleUpdateStatus = async (e) => {
         e.preventDefault();
         try {
-            const response = await apiFetch(`http://localhost:8000/api/v1/authority/complaints/${selectedProblem._id}/status`, {
+            const response = await apiFetch(API_ENDPOINTS.AUTHORITY.UPDATE_STATUS(selectedProblem._id), {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: targetStatus, comment: statusComment })
@@ -106,7 +107,7 @@ const AuthorityProblems = () => {
     const handleTransfer = async (e) => {
         e.preventDefault();
         try {
-            const response = await apiFetch(`http://localhost:8000/api/v1/authority/complaints/${selectedProblem._id}/transfer`, {
+            const response = await apiFetch(API_ENDPOINTS.AUTHORITY.TRANSFER_COMPLAINT(selectedProblem._id), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ targetAuthorityId: transferTargetId })

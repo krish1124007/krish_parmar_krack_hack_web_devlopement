@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import Layout from '../../components/Layout';
+import { API_ENDPOINTS } from '../../config/api.config';
 import '../../styles/Dashboard.css';
 
 const StudentProblems = () => {
@@ -38,7 +39,7 @@ const StudentProblems = () => {
 
     const fetchDomains = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/v1/student/get-domains', {
+            const response = await fetch(API_ENDPOINTS.STUDENT.GET_DOMAINS, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -55,7 +56,7 @@ const StudentProblems = () => {
 
     const fetchProblems = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/v1/problem/student/problems', {
+            const response = await fetch(API_ENDPOINTS.PROBLEM.STUDENT_PROBLEMS, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -84,7 +85,7 @@ const StudentProblems = () => {
                 formData.append('image', newProblem.image);
             }
 
-            const response = await fetch('http://localhost:8000/api/v1/problem/create', {
+            const response = await fetch(API_ENDPOINTS.PROBLEM.CREATE, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`

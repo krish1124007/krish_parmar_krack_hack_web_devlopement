@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { apiFetch } from '../../../utils/api';
+import { API_ENDPOINTS } from '../../../config/api.config';
 import { Search, Plus, Upload, Users } from 'lucide-react';
 
 const StudentManagement = ({ students, classes, onRefresh }) => {
@@ -15,7 +16,7 @@ const StudentManagement = ({ students, classes, onRefresh }) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/admin/create-student', {
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.CREATE_STUDENT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(studentData)
@@ -42,7 +43,7 @@ const StudentManagement = ({ students, classes, onRefresh }) => {
         formData.append('file', bulkFile);
 
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/admin/bulk-create-students', {
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.BULK_CREATE_STUDENTS, {
                 method: 'POST',
                 body: formData
             });
@@ -64,7 +65,7 @@ const StudentManagement = ({ students, classes, onRefresh }) => {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this?")) return;
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/admin/delete-student/${id}`, { method: 'DELETE' });
+            const res = await apiFetch(API_ENDPOINTS.ADMIN.DELETE_STUDENT(id), { method: 'DELETE' });
             const data = await res.json();
             if (data.success) {
                 setMessage('Student Deleted');

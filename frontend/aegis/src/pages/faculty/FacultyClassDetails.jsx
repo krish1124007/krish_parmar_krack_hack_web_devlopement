@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiFetch } from '../../utils/api';
+import { API_ENDPOINTS } from '../../config/api.config';
 import {
     BookOpen, Calendar, FileText, MessageSquare,
     UserCheck, Award, ExternalLink, Plus, Send,
@@ -46,7 +47,7 @@ const FacultyClassDetails = () => {
 
     const fetchMyClasses = async () => {
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/faculty/my-classes');
+            const res = await apiFetch(API_ENDPOINTS.FACULTY.MY_CLASSES);
             const data = await res.json();
             if (data.data?.success) {
                 setMyClasses(data.data.data || []);
@@ -59,7 +60,7 @@ const FacultyClassDetails = () => {
     const fetchClassDetails = async (classId) => {
         setLoading(true);
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/faculty/class/${classId}`);
+            const res = await apiFetch(API_ENDPOINTS.FACULTY.CLASS(classId));
             const data = await res.json();
             if (data.data?.success) {
                 setClassDetails(data.data.data);
@@ -75,7 +76,7 @@ const FacultyClassDetails = () => {
     const handleAddLecture = async (e) => {
         e.preventDefault();
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/faculty/class/${selectedClass}/lecture`, {
+            const res = await apiFetch(API_ENDPOINTS.FACULTY.LECTURE(selectedClass), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(lectureForm)
@@ -93,7 +94,7 @@ const FacultyClassDetails = () => {
 
     const handleMarkAttendance = async () => {
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/faculty/class/${selectedClass}/attendance`, {
+            const res = await apiFetch(API_ENDPOINTS.FACULTY.ATTENDANCE(selectedClass), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -116,7 +117,7 @@ const FacultyClassDetails = () => {
     const handleAddGrade = async (e) => {
         e.preventDefault();
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/faculty/class/${selectedClass}/grade`, {
+            const res = await apiFetch(API_ENDPOINTS.FACULTY.GRADE(selectedClass), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(gradeForm)
@@ -143,7 +144,7 @@ const FacultyClassDetails = () => {
     const handleAddNote = async (e) => {
         e.preventDefault();
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/faculty/class/${selectedClass}/note`, {
+            const res = await apiFetch(API_ENDPOINTS.FACULTY.NOTE(selectedClass), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(noteForm)
@@ -163,7 +164,7 @@ const FacultyClassDetails = () => {
     const handleAddDiscussion = async (e) => {
         e.preventDefault();
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/faculty/class/${selectedClass}/discussion`, {
+            const res = await apiFetch(API_ENDPOINTS.FACULTY.DISCUSSION(selectedClass), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: discussionText })
@@ -181,7 +182,7 @@ const FacultyClassDetails = () => {
 
     const handleAddReply = async (discussionId) => {
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/faculty/discussion/${discussionId}/reply`, {
+            const res = await apiFetch(API_ENDPOINTS.FACULTY.REPLY(discussionId), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: replyText[discussionId] || '' })

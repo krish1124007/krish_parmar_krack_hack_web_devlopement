@@ -4,13 +4,14 @@ import Layout from '../../components/Layout';
 import { Search, Users, Calendar, ArrowLeft, Info, Bell, LogIn, LogOut, Upload } from 'lucide-react';
 import '../../styles/Dashboard.css';
 import '../../styles/Clubs.css';
+import { API_BASE_URL } from '../../config/api.config';
 
 const Clubs = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [user] = useState(JSON.parse(localStorage.getItem('user') || '{}'));
   const userId = user._id || localStorage.getItem('userId');
   const role = localStorage.getItem('role') || 'student';
-  const API_URL = 'http://localhost:8000';
+  const API_URL = API_BASE_URL;
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem('accessToken');

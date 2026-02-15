@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { apiFetch } from '../../utils/api';
+import { API_ENDPOINTS } from '../../config/api.config';
 import '../../styles/Dashboard.css';
 
 const AdminProblems = () => {
@@ -16,7 +17,7 @@ const AdminProblems = () => {
 
     const fetchProblems = async () => {
         try {
-            const response = await apiFetch('http://localhost:8000/api/v1/problem/all');
+            const response = await apiFetch(API_ENDPOINTS.PROBLEM.ALL);
             const data = await response.json();
             if (data.success) {
                 setProblems(data.data);
@@ -28,7 +29,7 @@ const AdminProblems = () => {
 
     const handleUpdateStatus = async (id, newStatus) => {
         try {
-            const response = await apiFetch(`http://localhost:8000/api/v1/problem/update/${id}`, {
+            const response = await apiFetch(API_ENDPOINTS.PROBLEM.UPDATE(id), {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: newStatus })

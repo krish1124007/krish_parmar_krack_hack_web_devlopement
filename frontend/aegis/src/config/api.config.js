@@ -78,6 +78,9 @@ export const API_ENDPOINTS = {
         CREATE_DOMAIN: `${API_URL}/admin/create-domain`,
         CREATE_AUTHORITY: `${API_URL}/admin/create-authority`,
         DELETE_AUTHORITY: (id) => `${API_URL}/admin/delete-authority/${id}`,
+        ADD_AUTHORITY_TO_DOMAIN: `${API_URL}/admin/add-authority-to-domain`,
+        GET_DOMAIN_AUTHORITIES: (domainId) => `${API_URL}/admin/get-domain-authorities/${domainId}`,
+        SEND_WORK_REPORT: `${API_URL}/admin/send-work-report`,
     },
 
     // Authority

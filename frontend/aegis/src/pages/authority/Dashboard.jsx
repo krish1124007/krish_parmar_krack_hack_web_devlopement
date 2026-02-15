@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import Layout from '../../components/Layout';
 import { apiFetch } from '../../utils/api';
+import { API_ENDPOINTS } from '../../config/api.config';
 import '../../styles/Dashboard.css';
 
 const AuthorityDashboard = () => {
@@ -21,8 +22,8 @@ const AuthorityDashboard = () => {
     const fetchAllData = async () => {
         try {
             const [problemsRes, statsRes] = await Promise.all([
-                apiFetch('http://localhost:8000/api/v1/authority/complaints'),
-                apiFetch('http://localhost:8000/api/v1/authority/stats')
+                apiFetch(API_ENDPOINTS.AUTHORITY.COMPLAINTS),
+                apiFetch(API_ENDPOINTS.AUTHORITY.STATS)
             ]);
 
             const problemsJson = await problemsRes.json();

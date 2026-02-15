@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { apiFetch } from '../../utils/api';
+import { API_ENDPOINTS } from '../../config/api.config';
 import { useNavigate } from 'react-router-dom';
 import {
     Users,
@@ -36,10 +37,10 @@ const AdminDashboard = () => {
     const fetchData = async () => {
         try {
             const [facRes, stuRes, authRes, classRes] = await Promise.all([
-                apiFetch('http://localhost:8000/api/v1/admin/get-faculties'),
-                apiFetch('http://localhost:8000/api/v1/admin/get-students'),
-                apiFetch('http://localhost:8000/api/v1/admin/get-authorities'),
-                apiFetch('http://localhost:8000/api/v1/admin/get-classes')
+                apiFetch(API_ENDPOINTS.ADMIN.GET_FACULTIES),
+                apiFetch(API_ENDPOINTS.ADMIN.GET_STUDENTS),
+                apiFetch(API_ENDPOINTS.ADMIN.GET_AUTHORITIES),
+                apiFetch(API_ENDPOINTS.ADMIN.GET_CLASSES)
             ]);
 
             const facData = await facRes.json();
