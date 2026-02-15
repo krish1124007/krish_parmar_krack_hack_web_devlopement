@@ -3,10 +3,12 @@ import type { Document, Types } from "mongoose";
 interface IEvent extends Document {
     title: string;
     description: string;
-    image: string;
-    type: "internship" | "workshop" | "hackathon" | "seminar" | "competition";
-    domain: string;
-    faculty: Types.ObjectId;
+    image?: string;
+    type?: "internship" | "workshop" | "hackathon" | "seminar" | "competition" | "club_event";
+    domain?: string;
+    faculty?: Types.ObjectId;
+    club?: Types.ObjectId;
+    organizerType: "faculty" | "club";
     startDate: Date;
     endDate: Date;
     location: string;

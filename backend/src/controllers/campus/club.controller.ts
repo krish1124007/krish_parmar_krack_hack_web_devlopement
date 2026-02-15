@@ -369,10 +369,11 @@ const createEvent = asyncHandler(async (req: Request, res: Response) => {
     const event = await models.Event.create({
         title,
         description,
-        date: date || new Date(),
-        location: venue, // Assuming location field based on standard event models
-        organizer: clubId,
-        createdBy: studentId
+        startDate: date || new Date(),
+        endDate: date || new Date(),
+        location: venue,
+        club: clubId as any,
+        organizerType: "club"
     });
 
     club.events.push(event._id as any);

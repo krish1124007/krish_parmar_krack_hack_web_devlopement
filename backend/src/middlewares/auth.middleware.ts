@@ -25,7 +25,7 @@ export const verifyJWT = (req: AuthRequest, res: Response, next: NextFunction) =
 export const verifyRole = (roles: string[]) => {
     return (req: AuthRequest, res: Response, next: NextFunction) => {
         const userRole = req.user?.role?.toLowerCase();
-        console.log("THe user role is "  , userRole)
+        // console.log("THe user role is "  , userRole)
         const normalizedRoles = roles.map(r => r.toLowerCase());
         
         if (!req.user || !userRole || !normalizedRoles.includes(userRole)) {

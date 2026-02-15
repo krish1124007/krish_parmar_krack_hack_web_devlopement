@@ -16,21 +16,32 @@ const eventSchema = new mongoose.Schema<eventType>(
         },
         image: {
             type: String,
-            required: true,
+            required: false,
         },
         type: {
             type: String,
-            enum: ["internship", "workshop", "hackathon", "seminar", "competition"],
-            required: true,
+            enum: ["internship", "workshop", "hackathon", "seminar", "competition", "club_event"],
+            required: false,
         },
         domain: {
             type: String,
-            required: true,
+            required: false,
         },
         faculty: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Faculty",
+            required: false,
+        },
+        club: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Club",
+            required: false,
+        },
+        organizerType: {
+            type: String,
+            enum: ["faculty", "club"],
             required: true,
+            default: "faculty",
         },
         startDate: {
             type: Date,
