@@ -90,7 +90,7 @@ const FacultyManagement = ({ faculties, onRefresh }) => {
                             />
                         </div>
                         <button type="submit" className="submit-btn" disabled={loading}>
-                            {load => loading ? 'Creating...' : 'Create Faculty'}
+                            {loading ? 'Creating...' : 'Create Faculty'}
                         </button>
                     </form>
                 </div>

@@ -74,7 +74,7 @@ function App() {
         <Route path="/student/*" element={<ProtectedRoute allowedRoles={['student']}><StudentRoutes /></ProtectedRoute>} />
         <Route path="/campus/*" element={<ProtectedRoute allowedRoles={['student']}><CampusRoutes /></ProtectedRoute>} />
         <Route path="/forum" element={<ProtectedRoute allowedRoles={['student']}><Forum /></ProtectedRoute>} />
-        <Route path="/clubs" element={<ProtectedRoute allowedRoles={['student', 'admin']}><Clubs /></ProtectedRoute>} />
+        <Route path="/clubs" element={<ProtectedRoute allowedRoles={['student']}><Clubs /></ProtectedRoute>} />
         <Route path="/student/profile" element={<ProtectedRoute allowedRoles={['student']}><StudentProfile /></ProtectedRoute>} />
         <Route path="/faculty/*" element={<ProtectedRoute allowedRoles={['faculty']}><FacultyRoutes /></ProtectedRoute>} />
         <Route path="/authority/*" element={<ProtectedRoute allowedRoles={['authority']}><AuthorityRoutes /></ProtectedRoute>} />

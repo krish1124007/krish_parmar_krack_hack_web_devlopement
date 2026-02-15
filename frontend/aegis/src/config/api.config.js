@@ -120,6 +120,18 @@ export const API_ENDPOINTS = {
         DETAILS: (clubId) => `${API_URL}/club/${clubId}`,
         JOIN: (clubId) => `${API_URL}/club/${clubId}/join`,
         LEAVE: (clubId) => `${API_URL}/club/${clubId}/leave`,
+    },
+
+    // Announcements
+    ANNOUNCEMENT: {
+        BASE: `${API_URL}/campus/announcements`,
+        CREATE: `${API_URL}/campus/announcements`, // POST to base route
+        ALL: `${API_URL}/campus/announcements`,
+        DETAILS: (id) => `${API_URL}/campus/announcements/${id}`,
+        UPDATE: (id) => `${API_URL}/campus/announcements/${id}`,
+        DELETE: (id) => `${API_URL}/campus/announcements/${id}`,
+        BY_CATEGORY: (category) => `${API_URL}/campus/announcements/category/${category}`,
+        SEARCH: `${API_URL}/campus/announcements/search`,
     }
 };
 

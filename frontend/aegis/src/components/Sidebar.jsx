@@ -113,6 +113,14 @@ const Sidebar = ({ role, activeTab, onTabChange, theme, toggleTheme }) => {
                             <div className="nav-icon"><Users2 size={20} /></div>
                             <span className="nav-label">Clubs</span>
                         </button>
+                        <button
+                            className={`nav-item ${activeTab === 'announcements' ? ' active' : ''}`}
+                            onClick={() => handleNavigation('/admin/dashboard', 'announcements')}
+                            title="Announcements"
+                        >
+                            <div className="nav-icon"><Megaphone size={20} /></div>
+                            <span className="nav-label">Announcements</span>
+                        </button>
                     </>
                 );
             case 'authority':
@@ -300,6 +308,14 @@ const Sidebar = ({ role, activeTab, onTabChange, theme, toggleTheme }) => {
                         >
                             <div className="nav-icon"><School size={20} /></div>
                             <span className="nav-label">My Classes</span>
+                        </button>
+                        <button
+                            className={`nav-item ${isActive('/campus/announcements') ? 'active' : ''}`}
+                            onClick={() => handleNavigation('/campus/announcements', 'announcements')}
+                            title="Announcements"
+                        >
+                            <div className="nav-icon"><Megaphone size={20} /></div>
+                            <span className="nav-label">Announcements</span>
                         </button>
                     </>
                 );

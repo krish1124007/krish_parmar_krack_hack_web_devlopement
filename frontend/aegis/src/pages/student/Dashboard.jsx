@@ -1,9 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../../utils/api';
+import { useNavigate } from 'react-router-dom';
+import { School, BookOpen, Calendar, Trophy, UserCircle } from 'lucide-react';
+import { API_ENDPOINTS } from '../../config/api.config';
 import Layout from '../../components/Layout';
 import MyClasses from './MyClasses';
-import { apiFetch } from '../../utils/api';
-import { School, BookOpen, UserCircle } from 'lucide-react';
 import '../../styles/Dashboard.css';
 
 const StudentDashboard = () => {
@@ -27,7 +28,7 @@ const StudentDashboard = () => {
 
     const fetchClasses = async () => {
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/student/explore-classes');
+            const res = await apiFetch(API_ENDPOINTS.STUDENT.EXPLORE_CLASSES);
             const data = await res.json();
             if (data.data.success) {
                 setClasses(data.data.data || []);
@@ -40,7 +41,7 @@ const StudentDashboard = () => {
     const handleEnroll = async (classId) => {
         setLoading(true);
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/student/enroll-class', {
+            const res = await apiFetch(API_ENDPOINTS.STUDENT.ENROLL_CLASS, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ classId })

@@ -17,6 +17,7 @@ import FacultyManagement from './components/FacultyManagement';
 import ClassManagement from './components/ClassManagement';
 import StudentManagement from './components/StudentManagement';
 import AuthorityManagement from './components/AuthorityManagement';
+import AnnouncementManagement from './components/AnnouncementManagement';
 
 //this is comment
 const AdminDashboard = () => {
@@ -131,6 +132,12 @@ const AdminDashboard = () => {
             {activeTab === 'authority' && (
                 <AuthorityManagement
                     authorities={authorities}
+                    onRefresh={fetchData}
+                />
+            )}
+
+            {activeTab === 'announcements' && (
+                <AnnouncementManagement
                     onRefresh={fetchData}
                 />
             )}

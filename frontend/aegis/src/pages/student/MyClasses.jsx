@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiFetch } from '../../utils/api';
+import { API_ENDPOINTS } from '../../config/api.config';
 import {
     BookOpen, Calendar, FileText, MessageSquare,
     UserCheck, Award, ExternalLink, Plus, Send,
@@ -16,21 +17,25 @@ const MyClasses = () => {
     const [message, setMessage] = useState('');
     const [activeSection, setActiveSection] = useState('lectures');
 
+    // Missing states added
+    const [showNoteModal, setShowNoteModal] = useState(false);
+    const [showPaperModal, setShowPaperModal] = useState(false);
+
     // Form states
     const [noteForm, setNoteForm] = useState({ title: '', description: '', driveLink: '' });
     const [paperForm, setPaperForm] = useState({ title: '', year: '', semester: '', driveLink: '' });
     const [discussionText, setDiscussionText] = useState('');
     const [replyText, setReplyText] = useState({});
     const [expandedDiscussions, setExpandedDiscussions] = useState({});
-    // const [expandedDiscussions, setExpandedDiscussions] = useState({});
 
     useEffect(() => {
         fetchEnrolledClasses();
     }, []);
 
     const fetchEnrolledClasses = async () => {
+        setLoading(true);
         try {
-            const res = await apiFetch('http://localhost:8000/api/v1/student/explore-classes');
+            const res = await apiFetch(API_ENDPOINTS.STUDENT.EXPLORE_CLASSES);
             const data = await res.json();
             if (data.data?.success) {
                 const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -41,13 +46,15 @@ const MyClasses = () => {
             }
         } catch (err) {
             console.error('Failed to fetch classes', err);
+        } finally {
+            setLoading(false);
         }
     };
 
     const fetchClassDetails = async (classId) => {
         setLoading(true);
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/student/class/${classId}`);
+            const res = await apiFetch(API_ENDPOINTS.STUDENT.CLASS(classId));
             const data = await res.json();
             if (data.data?.success) {
                 setClassDetails(data.data.data);
@@ -63,7 +70,7 @@ const MyClasses = () => {
     const handleAddNote = async (e) => {
         e.preventDefault();
         try {
-            const res = await apiFetch(`http://localhost:8000/api/v1/student/class/${selectedClass}/note`, {
+            const res = await apiFetch(API_ENDPOINTS.STUDENT.CLASS_NOTE(selectedClass), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(noteForm)
@@ -81,122 +88,25 @@ const MyClasses = () => {
     };
 
     const handleAddPaper = async (e) => {
-        {
-            showPaperModal && (
-                <Modal onClose={() => setShowPaperModal(false)}>
-                    <div className="action-card" style={{ maxWidth: '500px', width: '90%' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                            <h3>Upload Past Paper</h3>
-                            <button onClick={() => setShowPaperModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                                <X size={24} />
-                            </button>
-                        </div>
-                        <form onSubmit={handleAddPaper} className="glass-form">
-                            <div className="form-group">
-                                <label>Title</label>
-                                <input
-                                    type="text"
-                                    value={paperForm.title}
-                                    onChange={(e) => setPaperForm({ ...paperForm, title: e.target.value })}
-                                    required
-                                    placeholder="e.g. Mid-term Exam 2024"
-                                />
-                            </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                <div className="form-group">
-                                    <label>Year</label>
-                                    <input
-                                        type="number"
-                                        value={paperForm.year}
-                                        onChange={(e) => setPaperForm({ ...paperForm, year: e.target.value })}
-                                        placeholder="2024"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label>Semester</label>
-                                    <input
-                                        type="text"
-                                        value={paperForm.semester}
-                                        onChange={(e) => setPaperForm({ ...paperForm, semester: e.target.value })}
-                                        placeholder="e.g. Semester"
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label>Google Drive Link</label>
-                                <input
-                                    type="url"
-                                    value={paperForm.driveLink}
-                                    onChange={(e) => setPaperForm({ ...paperForm, driveLink: e.target.value })}
-                                    required
-                                    placeholder="https://drive.google.com/..."
-                                />
-                            </div>
-                            <button type="submit" className="submit-btn" style={{ width: '100%' }}>
-                                Upload Paper
-                            </button>
-                        </form>
-                    </div>
-                </Modal>
-            )
-        }
-        return (
-            <div className="content-section fade-in">
-                {message && <div className={`status-toast ${message.includes('Error') ? 'error' : 'success'}`}>{message}</div>}
+        e.preventDefault();
+        // Placeholder implementation
+        console.log("Add Paper: ", paperForm);
+        setMessage("Paper upload feature coming soon!");
+        setShowPaperModal(false);
+        setTimeout(() => setMessage(''), 3000);
+    };
 
-                <div className="section-header">
-                    <h2>My Classes</h2>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Classes you're enrolled in</p>
-                </div>
+    const handleAddDiscussion = async (e) => {
+        e.preventDefault();
+        setMessage("Discussion feature coming soon!");
+        setDiscussionText('');
+        setTimeout(() => setMessage(''), 3000);
+    };
 
-                {enrolledClasses.length === 0 ? (
-                    <div className="action-card" style={{ textAlign: 'center', padding: '3rem' }}>
-                        <BookOpen size={48} style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }} />
-                        <h3>No Classes Enrolled</h3>
-                        <p style={{ color: 'var(--text-secondary)' }}>Go to Explore Classes to enroll in a class</p>
-                    </div>
-                ) : (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
-                        {enrolledClasses.map((cls) => (
-                            <div
-                                key={cls._id}
-                                className="action-card"
-                                style={{ cursor: 'pointer', transition: 'all 0.3s ease', border: '1px solid var(--border)' }}
-                                onClick={() => fetchClassDetails(cls._id)}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.transform = 'translateY(-4px)';
-                                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.transform = 'translateY(0)';
-                                    e.currentTarget.style.boxShadow = '';
-                                }}
-                            >
-                                <div className="card-header" style={{ borderBottom: '1px solid var(--border)', padding: '1.25rem' }}>
-                                    <div className="card-title">
-                                        <h2 style={{ fontSize: '1.35rem', marginBottom: '0.5rem' }}>{cls.name}</h2>
-                                        <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                            <Users size={14} />
-                                            {cls.teacher?.name || 'No teacher assigned'}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div style={{ padding: '1.25rem' }}>
-                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
-                                        {cls.enrolledStudents?.length || 0} students enrolled
-                                    </p>
-                                    <button className="submit-btn" style={{ width: '100%', padding: '0.75rem', fontSize: '0.95rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-                                        View Details
-                                        <ExternalLink size={16} />
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        );
-    }
+    const handleAddReply = async (discussionId) => {
+        setMessage("Reply feature coming soon!");
+        setTimeout(() => setMessage(''), 3000);
+    };
 
     // Render section content
     const renderSection = () => {
@@ -231,7 +141,7 @@ const MyClasses = () => {
                                                 {new Date(lecture.scheduledDate).toLocaleString()}
                                             </td>
                                             <td>{lecture.duration} min</td>
-                                            <td><span className={`badge ${lecture.status === 'completed' ? 'active' : ''}`}>{lecture.status}</span></td>
+                                            <td><span className={`badge ${lecture.status === 'completed' ? 'active' : ''} `}>{lecture.status}</span></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -247,7 +157,7 @@ const MyClasses = () => {
                             <button
                                 className="submit-btn"
                                 onClick={() => setShowNoteModal(true)}
-                                style={{ padding: '0.8rem 1.5rem' }}
+                                style={{ padding: '0.8rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                             >
                                 <Plus size={18} /> Upload Note
                             </button>
@@ -255,8 +165,8 @@ const MyClasses = () => {
 
                         {/* Note Upload Modal */}
                         {showNoteModal && (
-                            <div className="modal-overlay" onClick={() => setShowNoteModal(false)}>
-                                <div className="modal-content action-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '550px', width: '90%' }}>
+                            <Modal onClose={() => setShowNoteModal(false)}>
+                                <div className="action-card" style={{ maxWidth: '550px', width: '90%' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                                         <h3 style={{ fontSize: '1.3rem' }}>Upload Note</h3>
                                         <button onClick={() => setShowNoteModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)' }}>
@@ -298,7 +208,7 @@ const MyClasses = () => {
                                         </button>
                                     </form>
                                 </div>
-                            </div>
+                            </Modal>
                         )}
 
                         <div className="table-container">
@@ -317,7 +227,7 @@ const MyClasses = () => {
                                                         Uploaded by: {note.uploadedBy?.name} • {new Date(note.createdAt).toLocaleDateString()}
                                                     </p>
                                                 </div>
-                                                <a href={note.driveLink} target="_blank" rel="noopener noreferrer" className="header-btn" style={{ padding: '0.5rem 1rem' }}>
+                                                <a href={note.driveLink} target="_blank" rel="noopener noreferrer" className="header-btn" style={{ padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                                     <ExternalLink size={16} /> Open
                                                 </a>
                                             </div>
@@ -336,7 +246,7 @@ const MyClasses = () => {
                             <button
                                 className="submit-btn"
                                 onClick={() => setShowPaperModal(true)}
-                                style={{ padding: '0.8rem 1.5rem' }}
+                                style={{ padding: '0.8rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                             >
                                 <Plus size={18} /> Upload Past Paper
                             </button>
@@ -344,8 +254,8 @@ const MyClasses = () => {
 
                         {/* Paper Upload Modal */}
                         {showPaperModal && (
-                            <div className="modal-overlay" onClick={() => setShowPaperModal(false)}>
-                                <div className="modal-content action-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px', width: '90%' }}>
+                            <Modal onClose={() => setShowPaperModal(false)}>
+                                <div className="action-card" style={{ maxWidth: '500px', width: '90%' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                                         <h3>Upload Past Paper</h3>
                                         <button onClick={() => setShowPaperModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
@@ -379,7 +289,7 @@ const MyClasses = () => {
                                                     type="text"
                                                     value={paperForm.semester}
                                                     onChange={(e) => setPaperForm({ ...paperForm, semester: e.target.value })}
-                                                    placeholder="Fall"
+                                                    placeholder="e.g. Semester"
                                                 />
                                             </div>
                                         </div>
@@ -398,7 +308,7 @@ const MyClasses = () => {
                                         </button>
                                     </form>
                                 </div>
-                            </div>
+                            </Modal>
                         )}
 
                         <div className="table-container">
@@ -424,7 +334,7 @@ const MyClasses = () => {
                                                 <td>{paper.semester || '-'}</td>
                                                 <td>{paper.uploadedBy?.name}</td>
                                                 <td>
-                                                    <a href={paper.driveLink} target="_blank" rel="noopener noreferrer" className="header-btn" style={{ padding: '0.4rem 1rem', fontSize: '0.875rem' }}>
+                                                    <a href={paper.driveLink} target="_blank" rel="noopener noreferrer" className="header-btn" style={{ padding: '0.4rem 1rem', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                                                         <ExternalLink size={14} /> Open
                                                     </a>
                                                 </td>
@@ -451,7 +361,7 @@ const MyClasses = () => {
                                     style={{ flex: 1, padding: '0.8rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
                                     required
                                 />
-                                <button type="submit" className="submit-btn" style={{ padding: '0.8rem 1.5rem' }}>
+                                <button type="submit" className="submit-btn" style={{ padding: '0.8rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                     <Send size={18} /> Post
                                 </button>
                             </form>
@@ -473,7 +383,7 @@ const MyClasses = () => {
                                             <p style={{ marginBottom: '0.5rem' }}>{discussion.message}</p>
                                             <button
                                                 className="header-btn"
-                                                style={{ padding: '0.3rem 0.8rem', fontSize: '0.75rem', marginTop: '0.5rem' }}
+                                                style={{ padding: '0.3rem 0.8rem', fontSize: '0.75rem', marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                                                 onClick={() => setExpandedDiscussions({ ...expandedDiscussions, [discussion._id]: !expandedDiscussions[discussion._id] })}
                                             >
                                                 {expandedDiscussions[discussion._id] ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -542,7 +452,7 @@ const MyClasses = () => {
                                             <tr key={record._id}>
                                                 <td>{new Date(record.date).toLocaleDateString()}</td>
                                                 <td>
-                                                    <span className={`badge ${isPresent ? 'active' : ''}`} style={{ background: isPresent ? 'var(--success)' : 'var(--danger)' }}>
+                                                    <span className={`badge ${isPresent ? 'active' : ''} `} style={{ background: isPresent ? 'var(--success)' : 'var(--danger)' }}>
                                                         {isPresent ? 'Present' : 'Absent'}
                                                     </span>
                                                 </td>
@@ -603,6 +513,67 @@ const MyClasses = () => {
         }
     };
 
+    if (!selectedClass) {
+        return (
+            <div className="content-section fade-in">
+                {message && <div className={`status-toast ${message.includes('Error') ? 'error' : 'success'}`}>{message}</div>}
+
+                <div className="section-header">
+                    <h2>My Classes</h2>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Classes you're enrolled in</p>
+                </div>
+
+                {loading && <div style={{ textAlign: 'center', padding: '2rem' }}>Loading...</div>}
+
+                {!loading && enrolledClasses.length === 0 ? (
+                    <div className="action-card" style={{ textAlign: 'center', padding: '3rem' }}>
+                        <BookOpen size={48} style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }} />
+                        <h3>No Classes Enrolled</h3>
+                        <p style={{ color: 'var(--text-secondary)' }}>Go to Explore Classes to enroll in a class</p>
+                    </div>
+                ) : !loading && (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                        {enrolledClasses.map((cls) => (
+                            <div
+                                key={cls._id}
+                                className="action-card"
+                                style={{ cursor: 'pointer', transition: 'all 0.3s ease', border: '1px solid var(--border)' }}
+                                onClick={() => fetchClassDetails(cls._id)}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-4px)';
+                                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.boxShadow = '';
+                                }}
+                            >
+                                <div className="card-header" style={{ borderBottom: '1px solid var(--border)', padding: '1.25rem' }}>
+                                    <div className="card-title">
+                                        <h2 style={{ fontSize: '1.35rem', marginBottom: '0.5rem' }}>{cls.name}</h2>
+                                        <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <Users size={14} />
+                                            {cls.teacher?.name || 'No teacher assigned'}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div style={{ padding: '1.25rem' }}>
+                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                                        {cls.enrolledStudents?.length || 0} students enrolled
+                                    </p>
+                                    <button className="submit-btn" style={{ width: '100%', padding: '0.75rem', fontSize: '0.95rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                                        View Details
+                                        <ExternalLink size={16} />
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        );
+    }
+
     return (
         <div className="content-section fade-in">
             {message && <div className={`status-toast ${message.includes('Error') ? 'error' : 'success'}`}>{message}</div>}
@@ -612,18 +583,17 @@ const MyClasses = () => {
                     <button
                         className="header-btn"
                         onClick={() => { setSelectedClass(null); setClassDetails(null); }}
-                        style={{ marginBottom: '0.5rem' }}
+                        style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                     >
                         ← Back to My Classes
                     </button>
-                    <h2>{classDetails?.class?.name}</h2>
+                    <h2>{classDetails?.class?.name || 'Class Details'}</h2>
                     <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                        Teacher: {classDetails?.class?.teacher?.name}
+                        Teacher: {classDetails?.class?.teacher?.name || 'Unknown'}
                     </p>
                 </div>
             </div>
 
-            {/* Navigation Tabs */}
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
                 {[
                     { id: 'lectures', label: 'Lectures', icon: Calendar },
@@ -640,7 +610,8 @@ const MyClasses = () => {
                         style={{
                             padding: '0.6rem 1.2rem',
                             background: activeSection === id ? 'var(--primary)' : 'transparent',
-                            color: activeSection === id ? 'white' : 'var(--text-primary)'
+                            color: activeSection === id ? 'white' : 'var(--text-primary)',
+                            display: 'flex', alignItems: 'center', gap: '0.5rem'
                         }}
                     >
                         <Icon size={16} />
