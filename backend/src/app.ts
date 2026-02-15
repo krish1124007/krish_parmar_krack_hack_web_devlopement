@@ -3,9 +3,16 @@ import cors from "cors";
 
 const app = express();
 
-// CORS Configuration - Allow ALL origins (works with credentials)
 app.use(cors({
-    origin: "*"
+    // Allow specific origins + localhost
+    origin: [
+        "https://krish-parmar-krack-hack-web-devlope.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:8000"
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
 }));
 
 app.use(express.json({ limit: "16kb" }));
