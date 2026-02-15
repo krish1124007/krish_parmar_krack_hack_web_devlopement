@@ -152,6 +152,31 @@ const Login = () => {
                         })}
                     </div>
 
+                    {/* Login Info Helper */}
+                    <div style={{ marginBottom: '1.5rem', background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '8px', borderLeft: '4px solid #3b82f6', fontSize: '0.9rem', color: 'var(--text-primary)' }}>
+                        {role === 'admin' ? (
+                            <div>
+                                <strong>Default Credentials:</strong> <br />
+                                <span style={{ display: 'inline-block', marginTop: '0.5rem' }}>
+                                    Email: <code>admin@gmail.com</code> <br />
+                                    Password: <code>admin</code>
+                                </span>
+                            </div>
+                        ) : (role === 'student' || role === 'faculty') ? (
+                            <div>
+                                <strong>Default Password Formula:</strong> <br />
+                                <span style={{ display: 'inline-block', marginTop: '0.5rem' }}>
+                                    First 3 letters of email + <code>@123</code> <br />
+                                    <em style={{ fontSize: '0.85rem', opacity: 0.8 }}>(e.g. bob@gmail.com → bob@123)</em>
+                                </span>
+                            </div>
+                        ) : (
+                            <div>
+                                Please login with your registered Authority credentials.
+                            </div>
+                        )}
+                    </div>
+
                     <form onSubmit={handleSubmit} className="auth-form">
                         <div className="input-group">
                             <label>Email Address</label>
